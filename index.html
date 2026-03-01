@@ -13,6 +13,10 @@
             border-radius:10px;
             font-size: 16px;
         }
+        .move{
+            width: 50%;
+            height: 50%;
+        }
     </style>
 </head>
 <body>
@@ -58,13 +62,11 @@
             <div class="flex outline center padding" style="width: 100px;height:100px" id="down">move down</div>
             <button class="btn" onclick="game.handle_input('e')">dash down</button>
         </div>
-        <div class="flex one outline column">
-            <div class="flex row wrappable">
-                <button class="btn" onclick="game.handle_input('j')">special 1</button>
-                <button class="btn" onclick="game.handle_input('k')">special 2</button>
-                <button class="btn" onclick="game.handle_input('l')">ultimate</button>
-                <button class="btn" onclick="game.handle_input('d')">parry</button>
-            </div>
+        <div class="flex one outline row wrappable">
+                <button class="move" onclick="game.handle_input('j')">special 1</button>
+                <button class="move" onclick="game.handle_input('k')">special 2</button>
+                <button class="move" onclick="game.handle_input('l')">ultimate</button>
+                <button class="move" onclick="game.handle_input('d')">parry</button>
             
         </div>
     </div>
