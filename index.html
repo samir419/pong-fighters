@@ -3,93 +3,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="samir.css">
     <style>
-        button{
-            width: 100px;
-            height: 100px;
-        }
-        .move{
-            background-color: lightblue;
-            width: 100px;
-            height: 100px;
-        }
-        .ui{
-            width: 100%;
-            max-width: 920;
-             height: 100%; background-color: rgb(0,0,255,0.5);
-            position: absolute; z-index: 100;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        .ui-fixed{
-            width: 100%;
-            max-width: 920;
-             height: 100%;
-            position: absolute; z-index: 90;
-            display: none; 
-            align-items: center; 
-            justify-content: center;
+        .btn{
+            padding:10px;
+            margin:5px;
+            width: fit-content;
+            height:fit-content;
+            border-radius:10px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <div style="display: flex;align-items: center;justify-content: center;width: 100%;flex-direction: column;" id="game-window">
-        <div class="ui" id="select-mode">
-           <div>
-                <h2>select mode</h2>
-                <button onclick="mode='single';display_ui('select-player');select.play()">single player</button>
-                <button onclick="mode='multi';display_ui('select-player');select.play()">multiplayer</button>
-                <button onclick="mode='watch';display_ui('select-player');select.play()">watch</button>
+    <div class="flex full-width relative center">
+        <div id="select-mode" class="ui flex center column full absolute priority-1 secondary-bg scrollable-y">
+            <h2>select mode</h2>
+            <div>
+                <button class="btn" onclick="mode='single';display_ui('select-player');select.play()">single player</button>
+                <button class="btn" onclick="mode='multi';display_ui('select-player');select.play()">multiplayer</button>
+                <button class="btn" onclick="mode='watch';display_ui('select-player');select.play()">watch</button>
            </div>
         </div>
-        <div class="ui" id="select-player">
+        <div class="ui flex center column full absolute priority-1 secondary-bg" id="select-player">
             <div>
                 <h2 id="select-player-msg">player 1 select</h2>
                 <div id="player-list"></div>
-                <button onclick="display_ui('custom char');start_custom_creation()">custom char</button>
+                <button class="btn" onclick="display_ui('custom char');start_custom_creation()">custom char</button>
             </div>
         </div>
-        <div class="ui" id="custom char">
-            <div>
-                <h2 id="select-player-msg">custom char</h2>
-                <div id="custom-select"></div>
-            </div>
-            
+        <div class="ui flex center column full absolute priority-1 secondary-bg"  id="custom char">
+            <h2 id="select-player-msg">custom char</h2>
+            <div id="custom-select"></div>
         </div>
-        <div class="ui" id="win-screen">
+        <div class="ui flex center column full absolute priority-1"  id="win-screen">
             <div>
                 <h2 id="win-screen-msg"></h2>
-                <button onclick="game = new Game();game.start()">restart</button>
+                <button class="btn" onclick="game = new Game();game.start()">restart</button>
             </div>
         </div>
-         <div class="ui-fixed" id="debug">
+        <div class="ui-fixed flex center column full absolute priority-2 secondary-bg" id="debug">
             <div>
                 <p id="process"></p>
                 <p id="p1data"></p>
                 <p id="p2data"></p>
             </div>
         </div>
-         <canvas id="game-canvas" style="width: 100%;max-width: 920;border: solid;" onclick="if(game.state=='wait')game.start()"></canvas>
+        <canvas id="game-canvas" style="width: 100%;max-width: 920;border: solid;" onclick="if(game.state=='wait')game.start()"></canvas>
     </div>
-   
-    <div style="display: flex;flex-direction: row;width: 100%;justify-content: space-between;">
-        <div style="display: grid;grid-template-columns: auto auto;">
-            <button onclick="game.handle_input('j')">special 1</button>
-            <button onclick="game.handle_input('k')">special 2</button>
-            <button onclick="game.handle_input('d')">parry</button>
-            <button onclick="game.handle_input('l')">ultimate</button>
+    <div class="flex full-width row outline">
+        <div class="flex one outline column center">
+            <button class="btn" onclick="game.handle_input('q')">dash up</button>
+            <div class="flex outline center padding" style="width: 100px;height:100px" id="up">move up</div>
+            <div class="flex outline center padding" style="width: 100px;height:100px" id="down">move down</div>
+            <button class="btn" onclick="game.handle_input('e')">dash down</button>
         </div>
-        <div style="display: grid;grid-template-columns: auto auto;">
-            <button onclick="game.handle_input('q')">dash up</button>
-            <div class="move" id="up">move up</div>
-            <button onclick="game.handle_input('e')">dash down</button>
-            <div class="move" id="down">move down</div>
+        <div class="flex one outline column">
+            <div class="flex row wrappable">
+                <button class="btn" onclick="game.handle_input('j')">special 1</button>
+                <button class="btn" onclick="game.handle_input('k')">special 2</button>
+                <button class="btn" onclick="game.handle_input('l')">ultimate</button>
+                <button class="btn" onclick="game.handle_input('d')">parry</button>
+            </div>
+            
         </div>
     </div>
-    <button onclick="document.getElementById('game-window').requestFullscreen()">fullscreen</button>
-    <button onclick="game.state='running'">restart</button>
-    <button onclick="music.pause()">pause</button>
+    <button class="btn" onclick="document.getElementById('game-window').requestFullscreen()">fullscreen</button>
+    <button class="btn" onclick="game.state='running'">restart</button>
+    <button class="btn" onclick="music.pause()">pause music</button>
+    <button class="btn" onclick="game.handle_input('p')">pause</button>
     <script src="player.js"></script>
     <script src="special moves.js"></script>
     <script src="chars.js"></script>
