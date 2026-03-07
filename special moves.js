@@ -8,7 +8,7 @@ function generate(move){
         dx:move.dx||null,
         dy:move.dy||null,
         state:move.state||null,
-        lifespan:move.lifespan||null,
+        lifespan:move.lifespan*GAME_FRAME||null,
         color:move.color||null,
         onstart:move.onstart||null,
         update:move.update||null,
@@ -53,7 +53,7 @@ const projectile = {
         game.processes.push(this)
     },
     update:function(game){
-        this.x+=this.dx
+        this.x+=this.dx*GAME_DELTA
         this.lifespan--
         let opponent
         if(this.owner.num==1){
@@ -103,7 +103,7 @@ const echo = {
         game.processes.push(this)
     },
     update:function(game){
-        this.x+=this.dx
+        this.x+=this.dx*GAME_DELTA
         this.lifespan--
         if(this.lifespan<=220){
             this.owner.isSpecial=false
@@ -137,7 +137,7 @@ const reflector = {
         this.owner=user
         this.owner.isSpecial=true
         this.state='active'
-        this.lifespan=400
+        this.lifespan=600
         play_voice(user,1)
         game.processes.push(this)
        
@@ -273,7 +273,7 @@ const shadowclones = {owner:null,name:'shadow clones',
         let img = new Image()
         img.src = user.char.idle
         play_voice(user,1)
-        const clone1 = {x:0,y:0,w:50,h:70,player:user,color:'white',lifespan:400,state:'active',owner:null,image:img,
+        const clone1 = {x:0,y:0,w:50,h:70,player:user,color:'white',lifespan:600,state:'active',owner:null,image:img,
             update:function(game){
                 let main
                 if(game.players[0]==this.player){
@@ -295,7 +295,7 @@ const shadowclones = {owner:null,name:'shadow clones',
                 }
             }
         }
-        const clone2 = {x:0,y:0,w:50,h:70,player:user,color:'white',lifespan:400,state:'active',image:img,
+        const clone2 = {x:0,y:0,w:50,h:70,player:user,color:'white',lifespan:600,state:'active',image:img,
             update:function(game){
                 let main
                 if(game.players[0]==this.player){
@@ -370,7 +370,7 @@ const blackhole= {
         this.lifespan--;
         let pullStrength=0.2
         const ball = game.ball;
-        this.x+=this.dx
+        this.x+=this.dx*GAME_DELTA
         // Calculate pull vector toward the well center
         let dx = (this.x + this.w/2) - (ball.x + ball.width/2);
         let dy = (this.y + this.h/2) - (ball.y + ball.height/2);
@@ -534,10 +534,10 @@ const portal = {
     },
     update:function(game){
         this.lifespan--
-        this.y+=this.dy
+        this.y+=this.dy*GAME_DELTA
         if(this.y<0||this.y>480-this.h){
             this.dy*=-1
-            this.y+=this.dy
+            this.y+=this.dy*GAME_DELTA
         }
         if(this.lifespan<=220){
             this.owner.isSpecial=false
@@ -573,8 +573,8 @@ const happy_chaos = {owner:null,name:'happy chaos',
         play_voice(user,1)
         const ball1 = {x:user.x,y:user.y,w:25,h:25,player:user,color:'yellow',lifespan:400,state:'active',owner:null,dx:velx,dy:4,
             update:function(game){
-                this.x+=this.dx
-                this.y+=this.dy
+                this.x+=this.dx*GAME_DELTA
+                this.y+=this.dy*GAME_DELTA
                 if(game.get_collision(game.ball,{x:this.x,y:this.y,width:this.w,height:this.h})){
                     game.ball.dx*=-1
                 }
@@ -595,8 +595,8 @@ const happy_chaos = {owner:null,name:'happy chaos',
         }
         const ball2 = {x:user.x,y:user.y,w:25,h:25,player:user,color:'red',lifespan:400,state:'active',owner:null,dx:velx,dy:-4,
             update:function(game){
-                this.x+=this.dx
-                this.y+=this.dy
+                this.x+=this.dx*GAME_DELTA
+                this.y+=this.dy*GAME_DELTA
                 if(game.get_collision(game.ball,{x:this.x,y:this.y,width:this.w,height:this.h})){
                     game.ball.dx*=-1
                 }
@@ -655,7 +655,7 @@ const super_shot = {owner:null,
             game.ball.dy=0
             this.owner.isultimate=false
             game.state = 'freezeframe'
-            game.freezetimer=20
+            game.freezetimer=20*GAME_FRAME
             let blast = new Audio()
             blast.src = 'blast.wav'
             blast.play()
@@ -685,9 +685,9 @@ const great_wall = {
         user.isSpecial = true;
         setTimeout(() => { user.isSpecial = false; }, 200);
         this.state='active'
-        this.lifespan=300
+        this.lifespan=300*GAME_FRAME
         game.state = 'freezeframe'
-        game.freezetimer=20
+        game.freezetimer=20*GAME_FRAME
         game.processes.push(this)
         play_voice(user,2)
         blaze.play()

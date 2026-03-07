@@ -74,6 +74,8 @@
     <button class="btn" onclick="game.state='running'">restart</button>
     <button class="btn" onclick="music.pause()">pause music</button>
     <button class="btn" onclick="game.handle_input('p')">pause</button>
+
+    <script src="global.js"></script>
     <script src="player.js"></script>
     <script src="special moves.js"></script>
     <script src="chars.js"></script>
@@ -166,7 +168,7 @@
                 }
                 if(key=='f'){
                     this.state = 'freezeframe'
-                    this.freezetimer=20
+                    this.freezetimer=20*GAME_FRAME
                 }
                 if(key=='d'){
                     this.players[0].direction=0
@@ -315,7 +317,7 @@
                                 aud.src = 'parry.wav'
                                 aud.play()
                                 this.state = 'freezeframe'
-                                this.freezetimer=20
+                                this.freezetimer=20*GAME_FRAME
 
                             }
                         }
@@ -365,7 +367,7 @@
                         }
                         if(this.ball.dy==1)
                         this.state = 'freezeframe'
-                        this.freezetimer=30
+                        this.freezetimer=30*GAME_FRAME
                     }
                     if(this.ball.y<=0||this.ball.y>=canvas.height){
                         ball_bounce.play()

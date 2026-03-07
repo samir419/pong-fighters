@@ -55,19 +55,19 @@
                 this.state='idle'
             }
         }
-        this.y+=this.dy
+        this.y+=this.dy*GAME_DELTA
         this.upper_hitbox.update(this)
         this.lower_hitbox.update(this)
     }
     parry(){
         this.state='parry'
-        this.parry_counter=20
+        this.parry_counter=20*GAME_FRAME
     }
     dash(num){
         this.dash_direction=num
         this.state='dash'
         this.dash_velocity=15*this.dash_direction
-        this.frame_counter = 10
+        this.frame_counter = 10*GAME_FRAME
     }
     cpu(self, opponent, game) {
         // Reduce CPU buffer for more responsive gameplay
@@ -219,7 +219,7 @@ class Ball{
         this.lasthit=null
     }
     update(){
-        this.x+=this.dx
-        this.y+=this.dy
+        this.x+=this.dx*GAME_DELTA
+        this.y+=this.dy*GAME_DELTA
     }
 }
