@@ -1,4 +1,6 @@
 document.addEventListener("keydown", event => {
+    if(!game)return
+    if(game.state!="running")return
     event.preventDefault()
     if(game.players[1].state=='idle'){
         if (event.key === "ArrowUp"){game.players[1].direction=-1;game.players[1].dy=-5;}
@@ -7,6 +9,8 @@ document.addEventListener("keydown", event => {
    handle_p2input(event)
 });
 document.addEventListener("keyup", event => {
+    if(!game)return
+    if(game.state!="running")return
     if(game.players[1].state=='idle'){
         if (event.key === "ArrowUp")game.players[1].dy=0;
         if (event.key === "ArrowDown")game.players[1].dy=0;

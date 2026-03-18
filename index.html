@@ -27,6 +27,7 @@
                 <button class="btn" onclick="mode='single';display_ui('select-player');select.play()">single player</button>
                 <button class="btn" onclick="mode='multi';display_ui('select-player');select.play()">multiplayer</button>
                 <button class="btn" onclick="mode='watch';display_ui('select-player');select.play()">watch</button>
+                <button class="btn" onclick="display_ui('settings')">settings</button>
            </div>
         </div>
         <div class="ui flex center column full absolute priority-1 secondary-bg" id="select-player">
@@ -39,6 +40,16 @@
         <div class="ui flex center column full absolute priority-1 secondary-bg"  id="custom char">
             <h2 id="select-player-msg">custom char</h2>
             <div id="custom-select"></div>
+        </div>
+        <div class="ui flex center column full absolute priority-1 secondary-bg" id="settings">
+            <div>
+                <h2 id="select-player-msg">settings</h2>
+                <label for="" id="gamespeed-label">game speed</label>
+                <input type="text" id="gamespeed-input">
+                <label for="" id="frametime-label"></label>
+                <input type="text" id="frametime-input">
+                 <button onclick="display_ui('select-mode')">quit</button>
+            </div>
         </div>
         <div class="ui flex center column full absolute priority-1"  id="win-screen">
             <div>
@@ -57,10 +68,8 @@
     </div>
     <div class="flex full-width row outline">
         <div class="flex one outline column center">
-            <button class="btn" onclick="game.handle_input('q')">dash up</button>
-            <div class="flex outline center padding" style="width: 100px;height:100px" id="up">move up</div>
-            <div class="flex outline center padding" style="width: 100px;height:100px" id="down">move down</div>
-            <button class="btn" onclick="game.handle_input('e')">dash down</button>
+            <div class="flex outline center padding" style="width: 100%;height:100px" id="up">move up</div>
+            <div class="flex outline center padding" style="width: 100%;height:100px" id="down">move down</div>
         </div>
         <div class="flex one outline row wrappable">
                 <button class="move" onclick="game.handle_input('j')">special 1</button>
@@ -406,6 +415,8 @@
         }
         
         document.addEventListener("keydown", event => {
+            if(!game)return
+            if(game.state!="running")return
             if(game.players[0].state=='idle'){
                 if (event.key === "w"){game.players[0].direction=-1;game.players[0].dy=-5;}
                 if (event.key === "s"){ game.players[0].direction=1;game.players[0].dy=5;}
@@ -413,6 +424,8 @@
             game.handle_input(event.key)
         });
         document.addEventListener("keyup", event => {
+            if(!game)return
+            if(game.state!="running")return
             if(game.players[0].state=='idle'){
                 if (event.key === "w")game.players[0].dy=0;
                 if (event.key === "s")game.players[0].dy=0;

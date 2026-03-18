@@ -340,15 +340,15 @@ const blackhole= {
         user.meter -= 30;
 
         this.owner = user;
-        this.lifespan = 90;
+        this.lifespan = 200;
         this.state = 'active';
         // Position well slightly in front of player
         if (user.num === 1) {
             this.x = user.x + 20;
-            this.dx=10
+            this.dx=5
         } else {
             this.x = user.x - 20;
-            this.dx=-10
+            this.dx=-5
         }
         this.y = user.y;
 
@@ -376,8 +376,8 @@ const blackhole= {
         let dy = (this.y + this.h/2) - (ball.y + ball.height/2);
 
         // Apply small pull
-        ball.dx += dx * pullStrength * 0.01;
-        ball.dy += dy * pullStrength * 0.01;
+        ball.dx += (dx * pullStrength * 0.01)*GAME_DELTA;
+        ball.dy += (dy * pullStrength * 0.01)*GAME_DELTA;
 
         // Optional: clamp vertical to avoid crazy speeds
         if (ball.dy > 12) ball.dy = 12;
