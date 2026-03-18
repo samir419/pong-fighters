@@ -442,22 +442,50 @@
             const touch = e.touches[0];
             game.players[0].y = touch.clientY - game.players[0].height;
         })
+        let lastTapUp = 0;
+        let lastTapDown = 0;
+        const DOUBLE_TAP_DELAY = 250; // ms
+
+        // UP BUTTON
         document.getElementById('up').addEventListener("touchstart", function(e) {
             e.preventDefault();
-            game.players[0].dy=-5
-        })
-         document.getElementById('up').addEventListener("touchend", function(e) {
+
+            let now = Date.now();
+            if (now - lastTapUp < DOUBLE_TAP_DELAY) {
+                // DOUBLE TAP → DASH
+                game.players[0].dash(-1)
+            } else {
+                // NORMAL MOVE
+                game.players[0].dy = -5;
+            }
+            lastTapUp = now;
+        });
+
+        document.getElementById('up').addEventListener("touchend", function(e) {
             e.preventDefault();
-            game.players[0].dy=0
-        })
-         document.getElementById('down').addEventListener("touchstart", function(e) {
+            game.players[0].dy = 0;
+        });
+
+
+        // DOWN BUTTON
+        document.getElementById('down').addEventListener("touchstart", function(e) {
             e.preventDefault();
-            game.players[0].dy=5
-        })
-         document.getElementById('down').addEventListener("touchend", function(e) {
+
+            let now = Date.now();
+            if (now - lastTapDown < DOUBLE_TAP_DELAY) {
+                // DOUBLE TAP → DASH
+                game.players[0].dash(1)
+            } else {
+                // NORMAL MOVE
+                game.players[0].dy = 5;
+            }
+            lastTapDown = now;
+        });
+
+        document.getElementById('down').addEventListener("touchend", function(e) {
             e.preventDefault();
-            game.players[0].dy=0
-        })
+            game.players[0].dy = 0;
+        });
         
     </script>
     <script src="player2controls.js"></script>
